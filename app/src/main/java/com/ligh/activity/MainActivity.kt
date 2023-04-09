@@ -2,33 +2,30 @@ package com.ligh.activity
 
 import android.app.Dialog
 import android.graphics.drawable.ColorDrawable
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.DisplayMetrics
 import android.util.Log
-import android.view.*
+import android.view.Gravity
+import android.view.KeyEvent
+import android.view.LayoutInflater
+import android.view.View
 import android.widget.PopupWindow
 import android.widget.Scroller
-import androidx.activity.viewModels
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.commit
 import com.ligh.R
+import com.ligh.base.NavigationFragment
 import com.ligh.databinding.ActivityMainBinding
-import com.ligh.viewModul.TestViewModul
 
 class MainActivity : AppCompatActivity() {
 
-    val viewModel by viewModels<TestViewModul>()
+    private lateinit var bind : ActivityMainBinding
+    lateinit var  dialog :Dialog
 
-     lateinit var  dialog :Dialog
-
-    lateinit var bind : ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         bind = ActivityMainBinding.inflate(layoutInflater)
         setContentView(bind.root)
-        viewModel.mutableLiveData.observe(this
-        ) { t -> t?.let {
-            bind.tvRemaim.setText(it)
-        } }
 
 
         bind.tvRemaim.setOnClickListener(){
@@ -46,6 +43,20 @@ class MainActivity : AppCompatActivity() {
             dia.show()
         }
     }
+
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        // TODO Auto-generated method stub
+        if (keyCode == KeyEvent.KEYCODE_BACK) {//返回键
+            Toast.makeText(this, "F2", Toast.LENGTH_SHORT).show()
+        } else if (keyCode == KeyEvent.KEYCODE_HOME) {//HOME键
+            Toast.makeText(this, "F3", Toast.LENGTH_SHORT).show()
+        } else if (keyCode == KeyEvent.KEYCODE_NUMPAD_0) {//数字键
+            Toast.makeText(this, "F4", Toast.LENGTH_SHORT).show()
+        }
+        return super.onKeyDown(keyCode, event)
+    }
+
 
     override fun onResume() {
         super.onResume()
@@ -119,8 +130,8 @@ class MainActivity : AppCompatActivity() {
         //通过scroller实现,注意这种方式并不会改变view的布局参数，只是视觉上变化
         view.isScrollContainer = true //不设置scrollTo 无效
         view.scrollTo(view.scrollX + 100, view.scrollY + 100)
-        Log.i(Companion.TAG, "animation: scrollTo  after scroll x = ${view.scrollX}  ${view.scrollY}")
-        Log.i(Companion.TAG, "animation: scrollTo  after x = ${view.x}  ${view.y}")
+        Log.i(TAG, "animation: scrollTo  after scroll x = ${view.scrollX}  ${view.scrollY}")
+        Log.i(TAG, "animation: scrollTo  after x = ${view.x}  ${view.y}")
     }
 
     /**
