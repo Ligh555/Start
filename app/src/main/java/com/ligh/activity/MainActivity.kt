@@ -11,16 +11,16 @@ import android.view.View
 import android.widget.PopupWindow
 import android.widget.Scroller
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.commit
 import com.ligh.R
-import com.ligh.base.NavigationFragment
 import com.ligh.databinding.ActivityMainBinding
+
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var bind : ActivityMainBinding
-    lateinit var  dialog :Dialog
+    private lateinit var bind: ActivityMainBinding
+    lateinit var dialog: Dialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,13 +28,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(bind.root)
 
 
-        bind.tvRemaim.setOnClickListener(){
+        bind.tvRemaim.setOnClickListener() {
             val dialog = Dialog(this)
             dialog.setContentView(R.layout.view_test)
-           this.window.decorView.tag = dialog
+            this.window.decorView.tag = dialog
             val dia = Dialog(this)
-            val  view  = LayoutInflater.from(this).inflate(R.layout.view_test_teal,null,false)
-            view.setOnClickListener(){
+            val view = LayoutInflater.from(this).inflate(R.layout.view_test_teal, null, false)
+            view.setOnClickListener() {
                 dia.dismiss()
                 val test = this.window.decorView.tag as Dialog
                 test.show()
@@ -46,13 +46,29 @@ class MainActivity : AppCompatActivity() {
 
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        // TODO Auto-generated method stub
-        if (keyCode == KeyEvent.KEYCODE_BACK) {//返回键
-            Toast.makeText(this, "F2", Toast.LENGTH_SHORT).show()
-        } else if (keyCode == KeyEvent.KEYCODE_HOME) {//HOME键
-            Toast.makeText(this, "F3", Toast.LENGTH_SHORT).show()
-        } else if (keyCode == KeyEvent.KEYCODE_NUMPAD_0) {//数字键
-            Toast.makeText(this, "F4", Toast.LENGTH_SHORT).show()
+        when (keyCode) {
+            KeyEvent.KEYCODE_BACK -> {//返回键
+                return if (supportFragmentManager.backStackEntryCount < 1) {
+                    AlertDialog.Builder(this)
+                        .setTitle("退出应用")
+                        .setMessage("确定要退出应用吗？")
+                        .setPositiveButton("确定"){ _, _ ->
+                            finish()
+                        }
+                        .setNegativeButton("取消",null)
+                        .show()
+                    true
+                } else {
+                    supportFragmentManager.popBackStack()
+                    true
+                }
+            }
+            KeyEvent.KEYCODE_HOME -> {//HOME键
+                Toast.makeText(this, "home", Toast.LENGTH_SHORT).show()
+            }
+            KeyEvent.KEYCODE_NUMPAD_0 -> {//数字键
+                Toast.makeText(this, "F4", Toast.LENGTH_SHORT).show()
+            }
         }
         return super.onKeyDown(keyCode, event)
     }
@@ -64,29 +80,29 @@ class MainActivity : AppCompatActivity() {
         showPopUpWindow()
     }
 
-    fun showDialog(){
+    fun showDialog() {
         dialog = Dialog(this)
-        bind.btDialog.setOnClickListener{
-            if(dialog.isShowing){
+        bind.btDialog.setOnClickListener {
+            if (dialog.isShowing) {
                 dialog.dismiss()
             }
-            val view = LayoutInflater.from(this).inflate(R.layout.view_test_teal,null,false)
-            view.setOnClickListener{
+            val view = LayoutInflater.from(this).inflate(R.layout.view_test_teal, null, false)
+            view.setOnClickListener {
                 dialog.dismiss()
             }
             dialog.setContentView(view)
 
 
-            val window = dialog .window
+            val window = dialog.window
             window?.setGravity(Gravity.BOTTOM);
             dialog.show()
         }
     }
 
-    private fun showPopUpWindow(){
+    private fun showPopUpWindow() {
         val popupWindow = PopupWindow(this)
-        val view = LayoutInflater.from(this).inflate(R.layout.view_test_teal,null,false)
-        view.setOnClickListener{
+        val view = LayoutInflater.from(this).inflate(R.layout.view_test_teal, null, false)
+        view.setOnClickListener {
             popupWindow.dismiss()
             bind.backgroundView.visibility = View.GONE
         }
@@ -113,7 +129,7 @@ class MainActivity : AppCompatActivity() {
     /**
      * 瞬移动画，还可以通过设置一个空白的view控制宽高来实现
      */
-    private fun animation(){
+    private fun animation() {
         //通过translationX实现
         val view = bind.btDialog
 //        var translationX = view.translationX
@@ -137,12 +153,12 @@ class MainActivity : AppCompatActivity() {
     /**
      * 弹性动画
      */
-    private fun animationDynamic(){
+    private fun animationDynamic() {
         //1 通过post等方式持续设置translationX，Y
         //2 通过scroller
         val scroller = Scroller(this)
         val view = bind.btDialog
-        scroller.startScroll(view.scrollX,view.scrollY,100,100,1000) // 实际上就是设置参数
+        scroller.startScroll(view.scrollX, view.scrollY, 100, 100, 1000) // 实际上就是设置参数
         view.invalidate() // 重新绘制，会调用computeScroll方法进行弹性实现，实际就是根据设置参数百分比
         //注意要重载view的computeScroll
 //        @Override

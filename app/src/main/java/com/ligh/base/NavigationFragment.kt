@@ -52,11 +52,13 @@ class NavigationFragment : Fragment(), NavigationAdapter.OnItemClick {
             RECYCLE_VIEW -> {
                 parentFragmentManager.commit {
                     add(R.id.fragment_container_view, RecycleViewFragment())
+                    addToBackStack(null)
                 }
             }
             POP_UP ->{
                 parentFragmentManager.commit {
                     add(R.id.fragment_container_view, PopUpFragment())
+                    addToBackStack(null)
                 }
             }
         }
