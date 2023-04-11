@@ -6,6 +6,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ligh.R
+import kotlin.math.abs
+import kotlin.math.min
 
 class MyRecycleViewAdapter (private val viewModel: RecycleViewViewModel) : RecyclerView.Adapter<MyRecycleViewAdapter.MyViewHolder>(), MyItemTouchHelperCallback.ItemTouchHelperListener {
 
@@ -32,6 +34,7 @@ class MyRecycleViewAdapter (private val viewModel: RecycleViewViewModel) : Recyc
         val toPosition = target.adapterPosition
         viewModel.dataSwap(fromPosition,toPosition)
         notifyItemMoved(fromPosition,toPosition)
+        notifyItemRangeChanged(min(fromPosition, toPosition), abs(fromPosition - toPosition) +1)
     }
 
     override fun onItemDissmiss(source: RecyclerView.ViewHolder) {
