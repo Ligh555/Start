@@ -6,14 +6,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.LayoutRes
 import androidx.fragment.app.commit
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ligh.R
+import com.ligh.base.NavigationViewModel.Companion.BOTTOM_POPOVER
 import com.ligh.base.NavigationViewModel.Companion.POP_UP
 import com.ligh.base.NavigationViewModel.Companion.RECYCLE_VIEW
 import com.ligh.databinding.FragmentNavigationBinding
 import com.ligh.popup.PopUpFragment
 import com.ligh.recycleview.RecycleViewFragment
+import com.ligh.widget.BottomPopoverFragment
 
 class NavigationFragment : Fragment(), NavigationAdapter.OnItemClick {
 
@@ -50,17 +53,21 @@ class NavigationFragment : Fragment(), NavigationAdapter.OnItemClick {
     override fun onClick(position: Int) {
         when(viewModel.fragmentList[position]){
             RECYCLE_VIEW -> {
-                parentFragmentManager.commit {
-                    add(R.id.fragment_container_view, RecycleViewFragment())
-                    addToBackStack(null)
-                }
+                gotoFragment(RecycleViewFragment())
             }
             POP_UP ->{
-                parentFragmentManager.commit {
-                    add(R.id.fragment_container_view, PopUpFragment())
-                    addToBackStack(null)
-                }
+                gotoFragment(PopUpFragment())
             }
+            BOTTOM_POPOVER->{
+                gotoFragment(BottomPopoverFragment())
+            }
+        }
+    }
+
+    private fun gotoFragment(fragment: Fragment){
+        parentFragmentManager.commit {
+            replace(R.id.fragment_container_view, fragment)
+            addToBackStack(null)
         }
     }
 
