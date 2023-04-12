@@ -1,5 +1,6 @@
 package com.ligh.recycleview
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +10,7 @@ import com.ligh.R
 import kotlin.math.abs
 import kotlin.math.min
 
-class MyRecycleViewAdapter (private val viewModel: RecycleViewViewModel) : RecyclerView.Adapter<MyRecycleViewAdapter.MyViewHolder>(), MyItemTouchHelperCallback.ItemTouchHelperListener {
+class MyRecycleViewAdapter (private val viewModel: RecycleViewViewModel,private val listener: IItemClickListener) : RecyclerView.Adapter<MyRecycleViewAdapter.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -17,8 +18,13 @@ class MyRecycleViewAdapter (private val viewModel: RecycleViewViewModel) : Recyc
         return MyViewHolder(view)
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.mTvContent.text = "我是第${viewModel.getData()[position]}个"
+        holder.mController.setOnTouchListener(){_,_->
+            listener.onItemTouch(holder)
+            true
+        }
     }
 
     override fun getItemCount(): Int {
@@ -27,32 +33,10 @@ class MyRecycleViewAdapter (private val viewModel: RecycleViewViewModel) : Recyc
 
     class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var mTvContent: TextView = view.findViewById(R.id.tv_content)
+        val mController:View = view.findViewById(R.id.view_controller)
     }
 
-    override fun onItemMove(source: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder) {
-        val fromPosition = source.adapterPosition
-        val toPosition = target.adapterPosition
-        viewModel.dataSwap(fromPosition,toPosition)
-        notifyItemMoved(fromPosition,toPosition)
-        notifyItemRangeChanged(min(fromPosition, toPosition), abs(fromPosition - toPosition) +1)
-    }
-
-    override fun onItemDissmiss(source: RecyclerView.ViewHolder) {
-        val position = source.adapterPosition
-        viewModel.dataRemove(position)
-        notifyItemRemoved(position)
-    }
-
-    override fun onItemSelect(source: RecyclerView.ViewHolder?) {
-        //当拖拽选中时放大选中的view
-        source?.itemView?.scaleX = 1.2f
-        source?.itemView?.scaleY = 1.2f
-
-    }
-
-    override fun onItemClear(source: RecyclerView.ViewHolder) {
-        //当拖拽选结束缩小选中的view
-        source.itemView.scaleX = 1.0f
-        source.itemView.scaleY = 1.0f
+    interface IItemClickListener{
+        fun onItemTouch(viewHolder: MyViewHolder)
     }
 }

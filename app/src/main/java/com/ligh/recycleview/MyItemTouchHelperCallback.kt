@@ -30,7 +30,7 @@ class MyItemTouchHelperCallback(private val mListener: ItemTouchHelperListener) 
     }
 
     override fun isLongPressDragEnabled(): Boolean {
-        return true //长按启用拖拽
+        return false //长按不启用拖拽，默认启用
     }
 
     override fun isItemViewSwipeEnabled(): Boolean {
