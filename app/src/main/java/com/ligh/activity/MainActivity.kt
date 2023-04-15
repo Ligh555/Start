@@ -20,28 +20,11 @@ import com.ligh.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
 
     private lateinit var bind: ActivityMainBinding
-    lateinit var dialog: Dialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         bind = ActivityMainBinding.inflate(layoutInflater)
         setContentView(bind.root)
-
-
-        bind.tvRemaim.setOnClickListener() {
-            val dialog = Dialog(this)
-            dialog.setContentView(R.layout.view_test)
-            this.window.decorView.tag = dialog
-            val dia = Dialog(this)
-            val view = LayoutInflater.from(this).inflate(R.layout.view_test_teal, null, false)
-            view.setOnClickListener() {
-                dia.dismiss()
-                val test = this.window.decorView.tag as Dialog
-                test.show()
-            }
-            dia.setContentView(view)
-            dia.show()
-        }
     }
 
 
