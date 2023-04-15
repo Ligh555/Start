@@ -10,6 +10,8 @@ import androidx.annotation.LayoutRes
 import androidx.fragment.app.commit
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ligh.R
+import com.ligh.animation.AnimationFragment
+import com.ligh.base.NavigationViewModel.Companion.ANIMATION
 import com.ligh.base.NavigationViewModel.Companion.BOTTOM_POPOVER
 import com.ligh.base.NavigationViewModel.Companion.POP_UP
 import com.ligh.base.NavigationViewModel.Companion.RECYCLE_VIEW
@@ -60,6 +62,9 @@ class NavigationFragment : Fragment(), NavigationAdapter.OnItemClick {
             }
             BOTTOM_POPOVER->{
                 gotoFragment(BottomPopoverFragment())
+            }
+            ANIMATION->{
+                gotoFragment(AnimationFragment())
             }
         }
     }
