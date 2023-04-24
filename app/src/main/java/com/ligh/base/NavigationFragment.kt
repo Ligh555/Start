@@ -13,11 +13,15 @@ import com.ligh.R
 import com.ligh.animation.AnimationFragment
 import com.ligh.base.NavigationViewModel.Companion.ANIMATION
 import com.ligh.base.NavigationViewModel.Companion.BOTTOM_POPOVER
+import com.ligh.base.NavigationViewModel.Companion.PERMISSION
 import com.ligh.base.NavigationViewModel.Companion.POP_UP
 import com.ligh.base.NavigationViewModel.Companion.RECYCLE_VIEW
+import com.ligh.base.NavigationViewModel.Companion.TABLE
 import com.ligh.databinding.FragmentNavigationBinding
+import com.ligh.permission.PermissionFragment
 import com.ligh.popup.PopUpFragment
 import com.ligh.recycleview.RecycleViewFragment
+import com.ligh.table.TableFragment
 import com.ligh.widget.BottomPopoverFragment
 
 class NavigationFragment : Fragment(), NavigationAdapter.OnItemClick {
@@ -65,6 +69,12 @@ class NavigationFragment : Fragment(), NavigationAdapter.OnItemClick {
             }
             ANIMATION->{
                 gotoFragment(AnimationFragment())
+            }
+            TABLE ->{
+                gotoFragment(TableFragment())
+            }
+            PERMISSION ->{
+                gotoFragment(PermissionFragment())
             }
         }
     }

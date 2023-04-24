@@ -1,19 +1,10 @@
 package com.ligh.activity
 
-import android.app.Dialog
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
-import android.view.Gravity
 import android.view.KeyEvent
-import android.view.LayoutInflater
-import android.view.View
-import android.widget.PopupWindow
-import android.widget.Scroller
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.ligh.R
 import com.ligh.databinding.ActivityMainBinding
 
 
