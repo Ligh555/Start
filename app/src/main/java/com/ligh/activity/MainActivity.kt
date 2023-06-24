@@ -1,11 +1,19 @@
 package com.ligh.activity
 
 import android.os.Bundle
+import android.util.Log
 import android.view.KeyEvent
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.ligh.R
 import com.ligh.databinding.ActivityMainBinding
+import com.ligh.recycleview.MyRecycleViewAdapter
 
 
 class MainActivity : AppCompatActivity() {
@@ -16,6 +24,32 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         bind = ActivityMainBinding.inflate(layoutInflater)
         setContentView(bind.root)
+        bind.recycleView.apply {
+            val dte= MyAdapter()
+            adapter = dte
+            layoutManager = LinearLayoutManager(context).apply {
+                orientation = LinearLayoutManager.HORIZONTAL
+            }
+            post {  val layoutManager = bind.recycleView.layoutManager as LinearLayoutManager
+                val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
+                val lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
+
+                var fullyVisibleItemCount = 0
+                for (position in firstVisibleItemPosition..lastVisibleItemPosition) {
+                    val view = layoutManager.findViewByPosition(position)
+                    val itemWidth = view?.width ?: 0
+                    val itemRight = view?.let { layoutManager.getDecoratedRight(it) }?:0
+                    val recyclerViewRight = bind.recycleView.width - bind.recycleView.paddingRight
+
+                    if (itemRight <= recyclerViewRight) {
+                        fullyVisibleItemCount++
+                    } else {
+                        break // 超出屏幕范围，停止计数
+                    }
+                }
+                Log.i("lighrecy", "onCreate1:  $fullyVisibleItemCount")
+            }
+        }
     }
 
 
@@ -50,6 +84,25 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         const val TAG = "Test Activity"
+    }
+    class MyAdapter : RecyclerView.Adapter<MyViewHolder>() {
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
+            val view = LayoutInflater.from(parent.context).inflate(R.layout.test,parent,false)
+            return MyViewHolder(view)
+        }
+
+        override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+
+        }
+
+        override fun getItemCount(): Int {
+            return 10
+        }
+    }
+
+
+    class MyViewHolder(view : View) : RecyclerView.ViewHolder(view) {
+
     }
 
 }

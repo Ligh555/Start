@@ -12,5 +12,10 @@
         android:layout_height="match_parent"
         android:name="com.ligh.base.NavigationFragment"
         app:layout_constraintTop_toTopOf="parent"/>
+    <androidx.recyclerview.widget.RecyclerView
+        app:layout_constraintTop_toTopOf="@id/fragment_container_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/recycle_view"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
