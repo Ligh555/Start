@@ -2,10 +2,13 @@ package com.ligh.activity
 
 import android.os.Bundle
 import android.util.Log
+import android.util.SparseBooleanArray
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.BaseAdapter
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -13,7 +16,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ligh.R
 import com.ligh.databinding.ActivityMainBinding
-import com.ligh.recycleview.MyRecycleViewAdapter
 
 
 class MainActivity : AppCompatActivity() {
@@ -24,6 +26,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         bind = ActivityMainBinding.inflate(layoutInflater)
         setContentView(bind.root)
+        initListView()
         bind.recycleView.apply {
             val dte= MyAdapter()
             adapter = dte
@@ -48,6 +51,23 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
                 Log.i("lighrecy", "onCreate1:  $fullyVisibleItemCount")
+            }
+        }
+    }
+
+    private fun initListView(){
+        with(bind.lvTest){
+            val data = (0..10).map { "测试数据$it" }
+            adapter = CustomAdapter(data)
+            setOnItemClickListener { parent, view, position, id ->
+                val checkedItemPositions: SparseBooleanArray =
+                    getCheckedItemPositions()
+                val isChecked = checkedItemPositions[position]
+                Toast.makeText(
+                    this@MainActivity,
+                    "item $position isChecked=$isChecked",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
@@ -103,6 +123,27 @@ class MainActivity : AppCompatActivity() {
 
     class MyViewHolder(view : View) : RecyclerView.ViewHolder(view) {
 
+    }
+
+
+    private class CustomAdapter(private val data :List<String>) : BaseAdapter() {
+        override fun getCount(): Int {
+            return data.size
+        }
+
+        override fun getItem(position: Int): String {
+            return data[position]
+        }
+
+        override fun getItemId(position: Int): Long {
+            return data[position].hashCode().toLong()
+        }
+
+        override fun getView(position: Int, convertView: View?, container: ViewGroup): View {
+            val view = convertView?:LayoutInflater.from(container.context).inflate(R.layout.item_lv_multiple_choice, container, false)
+            (view.findViewById<View>(R.id.tv_content) as TextView).text = getItem(position)
+            return view
+        }
     }
 
 }
