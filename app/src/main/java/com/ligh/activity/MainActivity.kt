@@ -16,7 +16,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ligh.R
 import com.ligh.databinding.ActivityMainBinding
+import com.ligh.datastore.DataStoreCache
+import com.ligh.json.JsonTest
 import com.ligh.widget.BiometricTest
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlin.coroutines.CoroutineContext
 
 
 class MainActivity : AppCompatActivity() {
@@ -32,6 +40,14 @@ class MainActivity : AppCompatActivity() {
         bind = ActivityMainBinding.inflate(layoutInflater)
         setContentView(bind.root)
         biometricTest()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        GlobalScope.launch {
+            JsonTest().test()
+        }
+
     }
 
 
