@@ -2,9 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.ligh">
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".TestApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -14,6 +16,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Start"
         tools:targetApi="31">
+        <activity
+            android:name=".activity.MainActivity3"
+            android:exported="false" />
+        <activity
+            android:name=".activity.MainActivity2"
+            android:exported="false" />
         <activity
             android:name=".activity.MainActivity"
             android:exported="true">
