@@ -46,6 +46,19 @@ class MainActivity3 : BaseActivity() {
             tab.text = "测试$it"
             viewBinding.tabLayout6.addTab(tab)
         }
+        repeat(3) {
+            val tab = viewBinding.tab1.newTab()
+//            var textView = TextView(this).apply {
+//                text = "测试$it"
+//            }
+//            tab.customView = textView
+            var str =""
+            repeat(it+1){
+                str += "测试$it"
+            }
+            tab.text = str
+            viewBinding.tab1.addTab(tab)
+        }
 
         viewBinding.tabLayout6.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
@@ -61,6 +74,9 @@ class MainActivity3 : BaseActivity() {
             }
 
         })
+        viewBinding.button1.setOnClickListener {
+            viewBinding.tab1.changeTheme()
+        }
 
     }
 }

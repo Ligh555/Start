@@ -9,8 +9,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout1"
@@ -39,7 +39,25 @@
             app:tabSelectedTextColor="@color/purple_200"
             app:tabTextColor="@color/black" />
 
-
+        <com.ligh.google.tabs.TabLayout
+            android:id="@+id/tab1"
+            android:layout_width="wrap_content"
+            android:layout_height="28dp"
+            android:layout_gravity="center"
+            android:background="@drawable/shape_tab_bg"
+            app:tabBackground="@null"
+            app:tabIndicator="@drawable/tab_layout_indicator_background"
+            app:tabIndicatorColor="@color/white"
+            app:tabIndicatorFullWidth="true"
+            app:tabMode="auto"
+            app:tabRippleColor="@null"
+            app:tabSelectedTextColor="@color/purple_200"
+            app:tabTextColor="@color/black" />
+        
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"/>
     </LinearLayout>
 
 
