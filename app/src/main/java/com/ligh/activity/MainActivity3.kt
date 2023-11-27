@@ -60,6 +60,8 @@ class MainActivity3 : BaseActivity() {
             viewBinding.tab1.addTab(tab)
         }
 
+        viewBinding.tab1.setDivideDrawable(R.drawable.tab_layout_divider, R.dimen.dp8)
+
         viewBinding.tabLayout6.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 Toast.makeText(this@MainActivity3, "select${tab.text}", Toast.LENGTH_SHORT).show()

@@ -64,6 +64,7 @@ import android.widget.TextView;
 import androidx.annotation.BoolRes;
 import androidx.annotation.ColorInt;
 import androidx.annotation.ColorRes;
+import androidx.annotation.DimenRes;
 import androidx.annotation.Dimension;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.IntDef;
@@ -75,6 +76,7 @@ import androidx.annotation.RestrictTo;
 import androidx.annotation.StringRes;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.appcompat.widget.TooltipCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.core.util.Pools;
 import androidx.core.view.GravityCompat;
@@ -687,6 +689,12 @@ public class TabLayout extends HorizontalScrollView {
     applyModeAndGravity();
     tabLayoutResHelper =new  TabLayoutResHelper(this,DEF_STYLE_RES);
     tabLayoutResHelper.collectSkinRes(attrs,defStyleAttr);
+  }
+
+  public void setDivideDrawable(@DrawableRes int drawResId, @DimenRes int padding) {
+    slidingTabIndicator.setShowDividers(LinearLayout.SHOW_DIVIDER_MIDDLE);
+    slidingTabIndicator.setDividerDrawable(ContextCompat.getDrawable(getContext(), drawResId));
+    slidingTabIndicator.setDividerPadding(getContext().getResources().getDimensionPixelSize(padding));
   }
 
   public void changeTheme(){
