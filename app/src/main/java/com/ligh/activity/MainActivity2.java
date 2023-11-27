@@ -1,5 +1,6 @@
 package com.ligh.activity;
 
+import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import androidx.viewbinding.ViewBinding;
 
 import com.ligh.R;
 import com.ligh.UtilsKt;
+import com.ligh.view.CustomConstraintLayout;
 
 import dagger.hilt.android.AndroidEntryPoint;
 

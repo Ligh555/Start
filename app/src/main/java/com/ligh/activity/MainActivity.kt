@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
         GlobalScope.launch {
             JsonTest().test()
         }
-        val intent = Intent(this, MainActivity2::class.java)
+        val intent = Intent(this, MainActivity3::class.java)
         startActivity(intent)
     }
 
