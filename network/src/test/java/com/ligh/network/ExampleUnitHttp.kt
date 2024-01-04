@@ -1,6 +1,5 @@
-package com.ligh
+package com.ligh.network
 
-import com.ligh.network.Http
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -10,11 +9,9 @@ import org.junit.Assert.*
  *
  * See [testing documentation](http://d.android.com/tools/testing).
  */
-class ExampleUnitTest {
+class ExampleUnitHttp {
     @Test
     fun addition_isCorrect() {
-        val listPath = "article/list/0/json"
-       Http.doRequest(listPath)
+        assertEquals(4, 2 + 2)
     }
-
 }

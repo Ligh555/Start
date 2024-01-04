@@ -19,7 +19,6 @@ import com.ligh.R
 import com.ligh.binding
 import com.ligh.databinding.ActivityMainBinding
 import com.ligh.json.JsonTest
-import com.ligh.widget.BiometricTest
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -40,11 +39,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        GlobalScope.launch {
-            JsonTest().test()
-        }
-        val intent = Intent(this, MainActivity3::class.java)
-        startActivity(intent)
+        Test.test()
     }
 
 

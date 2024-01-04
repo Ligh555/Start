@@ -37,6 +37,7 @@ class PermissionFragment : Fragment() {
         requestMultiplePermissions.launch(arrayOf(
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.ACCESS_FINE_LOCATION))
+        this.isAdded
     }
 
     private val requestMultiplePermissions = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions: Map<String, Boolean> ->

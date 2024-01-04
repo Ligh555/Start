@@ -39,3 +39,4 @@ dependencyResolutionManagement {
 rootProject.name = "Start"
 include ':app'
 include ':datastore'
+include ':network'

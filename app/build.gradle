@@ -49,6 +49,8 @@ kapt {
 dependencies {
     def dagger_version = "2.44"
 
+    implementation(project(":network"))
+
     implementation "androidx.appcompat:appcompat:$rootProject.appCompatVersion"
     implementation "androidx.activity:activity-ktx:$rootProject.activityVersion"
 
@@ -100,4 +102,6 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     androidTestImplementation "androidx.test.ext:junit:$rootProject.androidxJunitVersion"
+
+    testImplementation(project(":network"))
 }
