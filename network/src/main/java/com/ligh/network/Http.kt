@@ -22,7 +22,7 @@ class Http {
         thread {
             client.newCall(request).execute().apply {
                 Log.i("http", "request $path $code $body")
-                println("request $path $code ${body.toString()}")
+                println("request $path $code ${body?.byteString()}")
             }
         }
         return  ""

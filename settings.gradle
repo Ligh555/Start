@@ -40,3 +40,4 @@ rootProject.name = "Start"
 include ':app'
 include ':datastore'
 include ':network'
+include ':okhttp'
