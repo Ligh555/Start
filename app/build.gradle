@@ -40,6 +40,12 @@ android {
         }
         jvmTarget = '1.8'
     }
+    packagingOptions {
+        //你的报错信息里面给你指明的路径
+        exclude 'okhttp3/internal/publicsuffix/NOTICE'
+        exclude 'okhttp3/internal/publicsuffix/publicsuffixes.gz'
+
+    }
 
 }
 kapt {
@@ -88,8 +94,6 @@ dependencies {
     implementation "androidx.fragment:fragment-ktx:$rootProject.fragment_version"
 
 
-    //OKhttp
-    implementation 'com.squareup.okhttp3:okhttp:4.10.0'
 
     // UI
     implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintLayoutVersion"

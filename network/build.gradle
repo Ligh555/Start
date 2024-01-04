@@ -35,8 +35,8 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.8.0'
     implementation "androidx.activity:activity-ktx:$rootProject.activityVersion"
-    // build.gradle
-    implementation "com.squareup.okhttp3:okhttp:4.10.0"
+
+    api(project(":okhttp"))
 
 
 
