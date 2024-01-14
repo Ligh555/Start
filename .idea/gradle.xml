@@ -15,6 +15,7 @@
             <option value="$PROJECT_DIR$/datastore" />
             <option value="$PROJECT_DIR$/network" />
             <option value="$PROJECT_DIR$/okhttp" />
+            <option value="$PROJECT_DIR$/selfstock" />
           </set>
         </option>
       </GradleProjectSettings>
