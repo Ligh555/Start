@@ -38,9 +38,20 @@ class CallServerInterceptor(private val forWebSocket: Boolean) : Interceptor {
     var invokeStartEvent = true
     var responseBuilder: Response.Builder? = null
     if (HttpMethod.permitsRequestBody(request.method) && requestBody != null) {
-      // If there's a "Expect: 100-continue" header on the request, wait for a "HTTP/1.1 100
+      // If there's a "z header on the request, wait for a "HTTP/1.1 100
       // Continue" response before transmitting the request body. If we don't get that, return
       // what we did get (such as a 4xx response) without ever transmitting the request body.
+
+      /**
+       * 客户端策略
+       * 如果客户端有 post 数据要上传，可以考虑使用 100-continue 协议。在请求头中加入 {“Expect”:”100-continue”}
+       * 如果没有 post 数据，不能使用 100-continue 协议，因为这会让服务端造成误解。
+       * 并不是所有的 Server 都会正确实现 100-continue 协议，如果 Client 发送 Expect:100-continue 消息后，在 timeout 时间内无响应，Client 需要立马上传 post 数据。
+       * 有些 Server 会错误实现 100-continue 协议，在不需要此协议时返回 100，此时客户端应该忽略。
+       * 服务端策略
+       * 正确情况下，收到请求后，返回 100 或错误码。
+       * 如果在发送 100-continue 前收到了 post 数据（客户端提前发送 post 数据），则不发送 100 响应码(略去)。
+       */
       if ("100-continue".equals(request.header("Expect"), ignoreCase = true)) {
         exchange.flushRequest()
         responseBuilder = exchange.readResponseHeaders(expectContinue = true)
@@ -61,6 +72,7 @@ class CallServerInterceptor(private val forWebSocket: Boolean) : Interceptor {
         }
       } else {
         exchange.noRequestBody()
+        // 如果不是http2，不复用连接
         if (!exchange.connection.isMultiplexed) {
           // If the "Expect: 100-continue" expectation wasn't met, prevent the HTTP/1 connection
           // from being reused. Otherwise we're still obligated to transmit the request body to
@@ -73,11 +85,13 @@ class CallServerInterceptor(private val forWebSocket: Boolean) : Interceptor {
     }
 
     if (requestBody == null || !requestBody.isDuplex()) {
+      // 将缓冲区请求发送出去，并不再传送信号，即http1，不会复用exchange
       exchange.finishRequest()
     }
     if (responseBuilder == null) {
       responseBuilder = exchange.readResponseHeaders(expectContinue = false)!!
       if (invokeStartEvent) {
+        //第一次返回响应头时的回调
         exchange.responseHeadersStart()
         invokeStartEvent = false
       }
@@ -92,6 +106,7 @@ class CallServerInterceptor(private val forWebSocket: Boolean) : Interceptor {
     if (code == 100) {
       // Server sent a 100-continue even though we did not request one. Try again to read the actual
       // response status.
+      //接收到服务端的100-continue 后，再次发送实际数据
       responseBuilder = exchange.readResponseHeaders(expectContinue = false)!!
       if (invokeStartEvent) {
         exchange.responseHeadersStart()

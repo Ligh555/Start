@@ -63,6 +63,7 @@ class RetryAndFollowUpInterceptor(private val client: OkHttpClient) : Intercepto
     var newExchangeFinder = true
     var recoveredFailures = listOf<IOException>()
     while (true) {
+      //判断是否需要新的exchange， 非重试新的router时newExchangeFinder = true，创建新的exchange
       call.enterNetworkInterceptorExchange(request, newExchangeFinder)
 
       var response: Response
@@ -74,7 +75,7 @@ class RetryAndFollowUpInterceptor(private val client: OkHttpClient) : Intercepto
 
         try {
           response = realChain.proceed(request)
-          newExchangeFinder = true
+          newExchangeFinder = true //注意，没有异常，链接成功，下一次为重定向，设置新的exchange
         } catch (e: RouteException) {
           // The attempt to connect via a route failed. The request will not have been sent.
           if (!recover(e.lastConnectException, call, request, requestSendStarted = false)) {
@@ -82,7 +83,7 @@ class RetryAndFollowUpInterceptor(private val client: OkHttpClient) : Intercepto
           } else {
             recoveredFailures += e.firstConnectException
           }
-          newExchangeFinder = false
+          newExchangeFinder = false // 注意,重试复用exchange
           continue
         } catch (e: IOException) {
           // An attempt to communicate with a server failed. The request may have been sent.

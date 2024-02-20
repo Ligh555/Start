@@ -42,7 +42,7 @@ abstract class RequestBody {
   abstract fun writeTo(sink: BufferedSink)
 
   /**
-   * A duplex request body is special in how it is **transmitted** on the network and
+   * A duplex双工 request body is special in how it is **transmitted** on the network and
    * in the **API contract** between OkHttp and the application.
    *
    * This method returns false unless it is overridden by a subclass.

@@ -93,7 +93,7 @@ class RealInterceptorChain(
     calls++
 
     if (exchange != null) {
-      check(exchange.finder.sameHostAndPort(request.url)) {
+      check(exchange.finder.sameHostAndPort(request.url)) { // 检查端口是否改变
         "network interceptor ${interceptors[index - 1]} must retain the same host and port"
       }
       check(calls == 1) {

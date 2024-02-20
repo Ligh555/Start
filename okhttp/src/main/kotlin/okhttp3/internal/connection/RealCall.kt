@@ -150,8 +150,8 @@ class RealCall(
     timeout.enter()
     callStart()
     try {
-      client.dispatcher.executed(this)
-      return getResponseWithInterceptorChain()
+      client.dispatcher.executed(this)  // 并没有执行请求，只是加到runningSyncCalls
+      return getResponseWithInterceptorChain() // 真正执行的地方
     } finally {
       client.dispatcher.finished(this)
     }
@@ -175,11 +175,11 @@ class RealCall(
   internal fun getResponseWithInterceptorChain(): Response {
     // Build a full stack of interceptors.
     val interceptors = mutableListOf<Interceptor>()
-    interceptors += client.interceptors
-    interceptors += RetryAndFollowUpInterceptor(client)
-    interceptors += BridgeInterceptor(client.cookieJar)
-    interceptors += CacheInterceptor(client.cache)
-    interceptors += ConnectInterceptor
+    interceptors += client.interceptors // client 中加入的自定义拦截器
+    interceptors += RetryAndFollowUpInterceptor(client) // 重试 + 重定向
+    interceptors += BridgeInterceptor(client.cookieJar) // 网络应用层设置，请求头设置
+    interceptors += CacheInterceptor(client.cache) // 策略
+    interceptors += ConnectInterceptor //执行请求
     if (!forWebSocket) {
       interceptors += client.networkInterceptors
     }
@@ -198,7 +198,7 @@ class RealCall(
 
     var calledNoMoreExchanges = false
     try {
-      val response = chain.proceed(originalRequest)
+      val response = chain.proceed(originalRequest) // 执行拦截器
       if (isCanceled()) {
         response.closeQuietly()
         throw IOException("Canceled")
