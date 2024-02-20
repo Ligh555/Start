@@ -1,6 +1,9 @@
 package com.ligh.activity
 
-import android.content.Intent
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.graphics.BitmapFactory
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.util.SparseBooleanArray
@@ -13,15 +16,13 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ligh.R
 import com.ligh.binding
 import com.ligh.databinding.ActivityMainBinding
-import com.ligh.json.JsonTest
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
@@ -40,7 +41,46 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         Test.test()
+        test()
     }
+
+    private fun test(){
+        viewBinding.btTest.setOnClickListener {
+            Toast.makeText(this@MainActivity,"测试",Toast.LENGTH_SHORT).show()
+            createNotificationForNormal()
+        }
+    }
+
+    private fun createNotificationForNormal() {
+
+        val notificationManager = this.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+
+        val mNormalChannelId = "123"
+        // 适配8.0及以上 创建渠道
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(
+                mNormalChannelId,
+                "测试",
+                NotificationManager.IMPORTANCE_HIGH
+            ).apply {
+                description = "描述"
+                setShowBadge(false) // 是否在桌面显示角标
+            }
+            notificationManager.createNotificationChannel(channel)
+        }
+
+        // 构建配置
+        val mBuilder = NotificationCompat.Builder(this, mNormalChannelId)
+            .setContentTitle("普通通知") // 标题
+            .setContentText("普通通知内容") // 文本
+            .setSmallIcon(R.mipmap.ic_launcher) // 小图标
+            .setLargeIcon(BitmapFactory.decodeResource(resources,R.mipmap.ic_launcher))
+            .setPriority(NotificationCompat.PRIORITY_HIGH) // 7.0 设置优先级
+            .setAutoCancel(true) // 是否自动消失（点击）or mManager.cancel(mNormalNotificationId)、cancelAll、setTimeoutAfter()
+        // 发起通知
+        notificationManager.notify(123, mBuilder.build())
+    }
+
 
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
