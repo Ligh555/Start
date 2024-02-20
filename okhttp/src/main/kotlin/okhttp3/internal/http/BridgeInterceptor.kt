@@ -31,6 +31,9 @@ import okio.buffer
  * request. Then it proceeds to call the network. Finally it builds a user response from the network
  * response.
  */
+/**
+ * 网络应用层管理，主要对应用层处理参数设置，主要为请求头设置
+ */
 class BridgeInterceptor(private val cookieJar: CookieJar) : Interceptor {
 
   @Throws(IOException::class)
