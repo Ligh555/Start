@@ -21,6 +21,17 @@ import androidx.recyclerview.widget.RecyclerView
  *
  *  todo 逻辑有问题，暂未完善
  *
+ *  需要注意问题
+ *  1、 存在recycleview 存在padding下
+ *  2.、 吸顶时怎么计算高度
+ *  3. 文字居中怎么计算
+ *
+ *  回答
+ *  2. 计算出顶部view底部 和 吸顶栏底部 的最小值为底部基准， 减去 吸顶栏高度 加上 文字高度 /2
+ *  3 .文字绘制时以baseline 为基准 ，上面时ascent ，下面是dsceent ，高度为ascent + descent， 由于坐标系以baseline为基准
+ *  ascent 为 负值，所以高度为 descent - ascent，
+ *  同时绘制时以baseline 为y轴坐标，所以y为  容器高度 /2  + (descent - ascent) / 2  -   descent
+ *
  */
 
 class TestItemDecoration : RecyclerView.ItemDecoration() {
