@@ -25,7 +25,6 @@ public class MainActivity2 extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         View view = LayoutInflater.from(this).inflate(R.layout.activity_main2,null);
-        ((TextView) view.findViewById(R.id.tv)).setText(UtilsKt.isDeviceRooted());
         setContentView(view);
     }
 

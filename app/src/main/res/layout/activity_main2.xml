@@ -7,21 +7,8 @@
     android:clipChildren="false"
     tools:context=".activity.MainActivity2">
 
-    <com.ligh.view.CustomTextView
-        android:id="@+id/tv"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:background="@color/purple_200"
-        android:drawablePadding="5dp"
-        android:gravity="center"
-        android:padding="10dp"
-        android:paddingEnd="24dp"
-        android:text="@string/app_name"
-        android:textColor="@color/black"
-        android:textSize="14dp"
-        app:layout_constraintStart_toStartOf="parent"
-
-        app:layout_constraintTop_toTopOf="parent" />
-
+    <com.test.recycleview.TestRecycleView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

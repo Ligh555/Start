@@ -2,6 +2,7 @@ package com.ligh.activity
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
@@ -42,6 +43,8 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         Test.test()
         test()
+
+        startActivity(Intent(this,MainActivity2::class.java))
     }
 
     private fun test(){
