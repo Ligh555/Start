@@ -1,6 +1,8 @@
 package com.ligh.activity
 
+import android.content.Context
 import android.util.Log
+import com.ligh.download.TestDownLoad
 import com.ligh.network.Http
 import okhttp3.Call
 import okhttp3.Callback
@@ -11,8 +13,10 @@ import java.io.IOException
 
 object Test {
 
-    fun test() {
+    fun test(context :Context) {
         okhttp()
+
+        TestDownLoad.startDownLoad(context)
     }
 
     private fun okhttp() {

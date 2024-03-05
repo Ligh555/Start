@@ -15,9 +15,11 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
+import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ligh.R
@@ -31,6 +33,8 @@ class MainActivity : AppCompatActivity() {
 
     val viewBinding: ActivityMainBinding by binding()
 
+    val viewModel :MainViewModel by viewModels()
+
     companion object {
         const val TAG = "Test Activity"
     }
@@ -41,8 +45,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        Test.test()
         test()
+        Test.test(this)
 
         startActivity(Intent(this,MainActivity2::class.java))
     }
