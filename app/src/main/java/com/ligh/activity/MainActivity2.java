@@ -21,12 +21,15 @@ import dagger.hilt.android.AndroidEntryPoint;
 public class MainActivity2 extends BaseActivity {
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         View view = LayoutInflater.from(this).inflate(R.layout.activity_main2,null);
         setContentView(view);
     }
+
+
 
     @NonNull
     @Override
@@ -37,5 +40,6 @@ public class MainActivity2 extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
     }
 }

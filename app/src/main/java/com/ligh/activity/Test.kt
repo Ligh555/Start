@@ -4,6 +4,11 @@ import android.content.Context
 import android.util.Log
 import com.ligh.download.TestDownLoad
 import com.ligh.network.Http
+import com.test.coroutine.TestViewModel
+import com.test.recycleview.TestFlow
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.OkHttpClient
@@ -17,6 +22,11 @@ object Test {
         okhttp()
 
         TestDownLoad.startDownLoad(context)
+//
+//        GlobalScope.launch(Dispatchers.IO) {
+//            TestFlow().test()
+//        }
+//        TestViewModel().test()
     }
 
     private fun okhttp() {

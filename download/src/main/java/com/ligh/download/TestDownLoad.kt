@@ -8,10 +8,15 @@ import android.content.Context.DOWNLOAD_SERVICE
 import android.content.Intent
 import android.content.IntentFilter
 import android.net.Uri
+import android.os.Build
 import android.os.Environment
+import android.service.notification.NotificationListenerService
+import android.service.notification.StatusBarNotification
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat.startActivity
 import java.io.File
+
 
 object TestDownLoad {
 
@@ -37,7 +42,7 @@ object TestDownLoad {
         request.setDescription("测试下载的内容文本")
 
         //下载或下载完成的时候显示通知栏
-        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE or DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
 
         //指定下载的文件类型为APK
         request.setMimeType("application/vnd.android.package-archive")
@@ -52,6 +57,7 @@ object TestDownLoad {
 
         //加入Request到系统下载队列，在条件满足时会自动开始下载。返回的为下载任务的唯一ID
         val requestID = downloadManager.enqueue(request)
+        Log.i("ligh", "startDownLoad: $requestID")
 
         //注册下载任务完成的监听
         context.registerReceiver(object : BroadcastReceiver() {
@@ -89,9 +95,26 @@ object TestDownLoad {
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         intent.setDataAndType(uri, "application/vnd.android.package-archive")
-        startActivity(context,intent,null)S
+        startActivity(context,intent,null)
     }
 
+    class NotificationListener : NotificationListenerService() {
+        //当系统收到新的通知后出发回调
+        override fun onNotificationPosted(sbn: StatusBarNotification) {
+            super.onNotificationPosted(sbn)
+        }
+
+        //当系统通知被删掉后出发回调
+        override fun onNotificationRemoved(sbn: StatusBarNotification) {
+            super.onNotificationRemoved(sbn)
+            Log.i("ligh", "startDownLoad: $sbn")
+            Log.i("ligh", "startDownLoad: ${sbn.id}")
+            Log.i("ligh", "startDownLoad: ${sbn.notification}")
+
+//            if (sbn.id == )
+        }
+
+    }
 
 
 }

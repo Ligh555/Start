@@ -19,7 +19,10 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
+import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ligh.R
@@ -33,7 +36,9 @@ class MainActivity : AppCompatActivity() {
 
     val viewBinding: ActivityMainBinding by binding()
 
-    val viewModel :MainViewModel by viewModels()
+    val viewModel: MainViewModel by viewModels()
+
+
 
     companion object {
         const val TAG = "Test Activity"
@@ -48,12 +53,13 @@ class MainActivity : AppCompatActivity() {
         test()
         Test.test(this)
 
-        startActivity(Intent(this,MainActivity2::class.java))
+        viewModel.test()
+
     }
 
-    private fun test(){
+    private fun test() {
         viewBinding.btTest.setOnClickListener {
-            Toast.makeText(this@MainActivity,"测试",Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@MainActivity, "测试", Toast.LENGTH_SHORT).show()
             createNotificationForNormal()
         }
     }
@@ -81,13 +87,12 @@ class MainActivity : AppCompatActivity() {
             .setContentTitle("普通通知") // 标题
             .setContentText("普通通知内容") // 文本
             .setSmallIcon(R.mipmap.ic_launcher) // 小图标
-            .setLargeIcon(BitmapFactory.decodeResource(resources,R.mipmap.ic_launcher))
+            .setLargeIcon(BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher))
             .setPriority(NotificationCompat.PRIORITY_HIGH) // 7.0 设置优先级
             .setAutoCancel(true) // 是否自动消失（点击）or mManager.cancel(mNormalNotificationId)、cancelAll、setTimeoutAfter()
         // 发起通知
         notificationManager.notify(123, mBuilder.build())
     }
-
 
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
