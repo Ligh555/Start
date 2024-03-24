@@ -53,7 +53,9 @@ kapt {
 }
 
 dependencies {
-    def dagger_version = "2.44"
+
+    implementation 'com.bytedance.tools.lancet:lancet-plugin-asm9:1.0.1'
+
 
     implementation(project(":network"))
     implementation(project(":download"))
@@ -93,6 +95,10 @@ dependencies {
 
     //fragment
     implementation "androidx.fragment:fragment-ktx:$rootProject.fragment_version"
+
+
+    //
+    implementation "com.bytedance.tools.codelocator:codelocator-core:2.0.3"
 
 
 

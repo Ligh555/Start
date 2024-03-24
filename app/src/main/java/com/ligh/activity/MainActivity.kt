@@ -19,10 +19,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
-import androidx.lifecycle.LifecycleCoroutineScope
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ligh.R
@@ -41,14 +37,22 @@ class MainActivity : AppCompatActivity() {
 
 
     companion object {
-        const val TAG = "Test Activity"
+        const val TAG = "ligh Test Activity"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        Log.i(TAG, "onCreate: ")
         super.onCreate(savedInstanceState)
     }
 
+
+    override fun onStart() {
+        Log.i(TAG, "onStart: ")
+        super.onStart()
+    }
+    
     override fun onResume() {
+        Log.i(TAG, "onResume: ")
         super.onResume()
         test()
         Test.test(this)
@@ -57,10 +61,24 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    override fun onPause() {
+        super.onPause()
+        Log.i(TAG, "onPause: ")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.i(TAG, "onStop: ")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.i(TAG, "onDestroy: ")
+    }
+
     private fun test() {
         viewBinding.btTest.setOnClickListener {
-            Toast.makeText(this@MainActivity, "测试", Toast.LENGTH_SHORT).show()
-            createNotificationForNormal()
+           startActivity(Intent(this,MainActivity2::class.java))
         }
     }
 

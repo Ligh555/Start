@@ -1,7 +1,6 @@
 package com.test.request
 
 import android.os.Looper
-import java.util.logging.Handler
 
 class TestRequest {
 
@@ -19,5 +18,15 @@ class TestRequest {
 
     fun handleRequest() {
         Request.request(Request.getId(client))
+    }
+
+    var totalTime = 0L
+
+    fun test(){
+        val start  =  System.currentTimeMillis()
+
+        //doSomething
+
+        totalTime += start - totalTime
     }
 }

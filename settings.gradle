@@ -13,6 +13,9 @@ pluginManagement {
         maven {
             setUrl("https://maven.aliyun.com/repository/gradle-plugin")
         }
+        maven {
+            setUrl("D://code/git/lancet/repos")
+        }
         mavenCentral()
         gradlePluginPortal()
     }
@@ -31,6 +34,10 @@ dependencyResolutionManagement {
         }
         maven {
             setUrl("https://maven.aliyun.com/repository/gradle-plugin")
+        }
+        maven { url "https://jitpack.io" }
+        maven {
+            setUrl("D://code/git/lancet/repos")
         }
         google()
         mavenCentral()
