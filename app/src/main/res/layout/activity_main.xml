@@ -9,42 +9,78 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
+        android:background="#e5ffff"
         android:padding="@dimen/dp8"
-        android:background="#e5ffff">
+        app:layout_constraintTop_toTopOf="parent">
 
-        <Button
+        <com.test.view.TestView
             android:id="@+id/bt_test"
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@color/teal_200"
+            android:text="@string/app_name" />
+
+
+        <com.test.view.TestView1
+            android:id="@+id/bt_test1"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="30dp"
+            android:background="@color/purple_200"
+            android:text="@string/app_name" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/app_name"/>
+            android:layout_marginStart="30dp"
+            android:orientation="vertical">
+            <com.test.coordinatorLayout.DependentView
+                android:layout_width="50dp"
+                android:layout_height="50dp" />
+
+            <androidx.coordinatorlayout.widget.CoordinatorLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/app_name"
+                    app:layout_behavior="com.test.coordinatorLayout.FollowBehavior" />
+
+            </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+        </LinearLayout>
     </LinearLayout>
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_container_view"
+        android:name="com.ligh.base.NavigationFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="com.ligh.base.NavigationFragment"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.recyclerview.widget.RecyclerView
-        app:layout_constraintTop_toTopOf="@id/fragment_container_view"
+        android:id="@+id/recycle_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/recycle_view"/>
+        app:layout_constraintTop_toTopOf="@id/fragment_container_view" />
 
     <ListView
         android:id="@+id/lv_test"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/recycle_view"
-        android:choiceMode="multipleChoice"/>
+        android:choiceMode="multipleChoice"
+        app:layout_constraintTop_toBottomOf="@+id/recycle_view" />
 
     <androidx.constraintlayout.helper.widget.Flow
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"
         app:constraint_referenced_ids="fragment_container_view,lv_test,recycle_view"
-        android:visibility="gone"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
