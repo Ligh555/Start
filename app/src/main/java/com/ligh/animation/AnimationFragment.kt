@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Scroller
 import androidx.fragment.app.Fragment
-import com.ligh.activity.MainActivity
 import com.ligh.databinding.FragmentAnimationBinding
 
 class AnimationFragment : Fragment() {
@@ -76,8 +75,8 @@ class AnimationFragment : Fragment() {
         //通过scroller实现,注意这种方式并不会改变view的布局参数，只是视觉上变化
         view.isScrollContainer = true //不设置scrollTo 无效
         view.scrollTo(view.scrollX + 100, view.scrollY + 100)
-        Log.i(MainActivity.TAG, "animation: scrollTo  after scroll x = ${view.scrollX}  ${view.scrollY}")
-        Log.i(MainActivity.TAG, "animation: scrollTo  after x = ${view.x}  ${view.y}")
+        Log.i("AnimationFragment", "animation: scrollTo  after scroll x = ${view.scrollX}  ${view.scrollY}")
+        Log.i("AnimationFragment", "animation: scrollTo  after x = ${view.x}  ${view.y}")
     }
 
 

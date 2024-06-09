@@ -6,10 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.LayoutRes
-import androidx.fragment.app.commit
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.ligh.R
 import com.ligh.animation.AnimationFragment
 import com.ligh.base.NavigationViewModel.Companion.ANIMATION
 import com.ligh.base.NavigationViewModel.Companion.BOTTOM_POPOVER
@@ -80,10 +77,10 @@ class NavigationFragment : Fragment(), NavigationAdapter.OnItemClick {
     }
 
     private fun gotoFragment(fragment: Fragment){
-        parentFragmentManager.commit {
-            replace(R.id.fragment_container_view, fragment)
-            addToBackStack(null)
-        }
+//        parentFragmentManager.commit {
+//            replace(R.id.fragment_container_view, fragment)
+//            addToBackStack(null)
+//        }
     }
 
 }

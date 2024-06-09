@@ -1,4 +1,4 @@
-package com.ligh.viewModul
+package com.ligh.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData

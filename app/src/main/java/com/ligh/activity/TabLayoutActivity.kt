@@ -1,24 +1,17 @@
 package com.ligh.activity
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import android.widget.TextView
 import android.widget.Toast
-import androidx.viewbinding.ViewBinding
 import com.google.android.material.tabs.TabLayout
-import com.ligh.R
 import com.ligh.binding
 import com.ligh.databinding.ActivityMain3Binding
-import com.ligh.databinding.ActivityMainBinding
 
-class MainActivity3 : BaseActivity() {
+class TabLayoutActivity : BaseActivity() {
 
     override val viewBinding: ActivityMain3Binding by binding()
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(viewBinding.root)
+    override fun initViewBinding() {
+
     }
 
     override fun onResume() {
@@ -60,25 +53,20 @@ class MainActivity3 : BaseActivity() {
             viewBinding.tab1.addTab(tab)
         }
 
-        viewBinding.tab1.setDivideDrawable(R.drawable.tab_layout_divider, R.dimen.dp8)
-
         viewBinding.tabLayout6.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
-                Toast.makeText(this@MainActivity3, "select${tab.text}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@TabLayoutActivity, "select${tab.text}", Toast.LENGTH_SHORT).show()
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab) {
-                Toast.makeText(this@MainActivity3, "un${tab.text}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@TabLayoutActivity, "un${tab.text}", Toast.LENGTH_SHORT).show()
             }
 
             override fun onTabReselected(tab: TabLayout.Tab) {
-                Toast.makeText(this@MainActivity3, "re${tab.text}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@TabLayoutActivity, "re${tab.text}", Toast.LENGTH_SHORT).show()
             }
 
         })
-        viewBinding.button1.setOnClickListener {
-            viewBinding.tab1.changeTheme()
-        }
 
     }
 }

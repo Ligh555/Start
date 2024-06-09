@@ -1,11 +1,9 @@
-package com.ligh.viewModul
+package com.ligh.viewmodel
 
 import android.os.CountDownTimer
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import okhttp3.*
-import java.io.IOException
+
 
 class TestViewModul: ViewModel() {
 
@@ -40,18 +38,18 @@ class TestViewModul: ViewModel() {
         }
     }
 
-    fun okhttpGet(){
-        val okHttpClient = OkHttpClient()
-        val request = Request.Builder().url("asdfasd").build()
-        okHttpClient.newCall(request).enqueue(object : Callback{
-            override fun onFailure(call: Call, e: IOException) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onResponse(call: Call, response: Response) {
-                TODO("Not yet implemented")
-            }
-
-        })
-    }
+//    fun okhttpGet(){
+//        val okHttpClient = OkHttpClient()
+//        val request = Request.Builder().url("asdfasd").build()
+//        okHttpClient.newCall(request).enqueue(object : Callback{
+//            override fun onFailure(call: Call, e: IOException) {
+//                TODO("Not yet implemented")
+//            }
+//
+//            override fun onResponse(call: Call, response: Response) {
+//                TODO("Not yet implemented")
+//            }
+//
+//        })
+//    }
 }

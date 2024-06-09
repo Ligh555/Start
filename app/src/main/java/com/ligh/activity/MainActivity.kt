@@ -1,13 +1,5 @@
 package com.ligh.activity
 
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.content.Intent
-import android.graphics.BitmapFactory
-import android.os.Build
-import android.os.Bundle
-import android.util.Log
-import android.util.SparseBooleanArray
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -15,10 +7,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.NotificationCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ligh.R
@@ -28,88 +17,32 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
-    val viewBinding: ActivityMainBinding by binding()
+    override val viewBinding: ActivityMainBinding by binding()
 
-    val viewModel: MainViewModel by viewModels()
+    override fun initViewBinding() {
+        viewBinding.recycleView.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter  = object  : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+                override fun onCreateViewHolder(
+                    parent: ViewGroup,
+                    viewType: Int
+                ): RecyclerView.ViewHolder {
+                    val view = LayoutInflater.from(parent.context).inflate(R.layout.test1, parent, false)
+                    return MyViewHolder(view)
+                }
 
+                override fun getItemCount(): Int {
+                    return 50
+                }
 
+                override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
-    companion object {
-        const val TAG = "ligh Test Activity"
-    }
+                }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        Log.i(TAG, "onCreate: ")
-        super.onCreate(savedInstanceState)
-    }
-
-
-    override fun onStart() {
-        Log.i(TAG, "onStart: ")
-        super.onStart()
-    }
-    
-    override fun onResume() {
-        Log.i(TAG, "onResume: ")
-        super.onResume()
-        test()
-        Test.test(this)
-
-        viewModel.test()
-
-    }
-
-    override fun onPause() {
-        super.onPause()
-        Log.i(TAG, "onPause: ")
-    }
-
-    override fun onStop() {
-        super.onStop()
-        Log.i(TAG, "onStop: ")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.i(TAG, "onDestroy: ")
-    }
-
-    private fun test() {
-        viewBinding.btTest.setOnClickListener {
-           startActivity(Intent(this,MainActivity2::class.java))
-        }
-    }
-
-    private fun createNotificationForNormal() {
-
-        val notificationManager = this.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-
-        val mNormalChannelId = "123"
-        // 适配8.0及以上 创建渠道
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(
-                mNormalChannelId,
-                "测试",
-                NotificationManager.IMPORTANCE_HIGH
-            ).apply {
-                description = "描述"
-                setShowBadge(false) // 是否在桌面显示角标
             }
-            notificationManager.createNotificationChannel(channel)
         }
-
-        // 构建配置
-        val mBuilder = NotificationCompat.Builder(this, mNormalChannelId)
-            .setContentTitle("普通通知") // 标题
-            .setContentText("普通通知内容") // 文本
-            .setSmallIcon(R.mipmap.ic_launcher) // 小图标
-            .setLargeIcon(BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher))
-            .setPriority(NotificationCompat.PRIORITY_HIGH) // 7.0 设置优先级
-            .setAutoCancel(true) // 是否自动消失（点击）or mManager.cancel(mNormalNotificationId)、cancelAll、setTimeoutAfter()
-        // 发起通知
-        notificationManager.notify(123, mBuilder.build())
     }
 
 
@@ -186,51 +119,51 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun initRecycleView() {
-        viewBinding.recycleView.apply {
-            val dte = MyAdapter()
-            adapter = dte
-            layoutManager = LinearLayoutManager(context).apply {
-                orientation = LinearLayoutManager.HORIZONTAL
-            }
-            post {
-                val layoutManager = viewBinding.recycleView.layoutManager as LinearLayoutManager
-                val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
-                val lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
-
-                var fullyVisibleItemCount = 0
-                for (position in firstVisibleItemPosition..lastVisibleItemPosition) {
-                    val view = layoutManager.findViewByPosition(position)
-                    val itemWidth = view?.width ?: 0
-                    val itemRight = view?.let { layoutManager.getDecoratedRight(it) } ?: 0
-                    val recyclerViewRight =
-                        viewBinding.recycleView.width - viewBinding.recycleView.paddingRight
-
-                    if (itemRight <= recyclerViewRight) {
-                        fullyVisibleItemCount++
-                    } else {
-                        break // 超出屏幕范围，停止计数
-                    }
-                }
-                Log.i("lighrecy", "onCreate1:  $fullyVisibleItemCount")
-            }
+//        viewBinding.recycleView.apply {
+//            val dte = MyAdapter()
+//            adapter = dte
+//            layoutManager = LinearLayoutManager(context).apply {
+//                orientation = LinearLayoutManager.HORIZONTAL
+//            }
+//            post {
+//                val layoutManager = viewBinding.recycleView.layoutManager as LinearLayoutManager
+//                val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
+//                val lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
+//
+//                var fullyVisibleItemCount = 0
+//                for (position in firstVisibleItemPosition..lastVisibleItemPosition) {
+//                    val view = layoutManager.findViewByPosition(position)
+//                    val itemWidth = view?.width ?: 0
+//                    val itemRight = view?.let { layoutManager.getDecoratedRight(it) } ?: 0
+//                    val recyclerViewRight =
+//                        viewBinding.recycleView.width - viewBinding.recycleView.paddingRight
+//
+//                    if (itemRight <= recyclerViewRight) {
+//                        fullyVisibleItemCount++
+//                    } else {
+//                        break // 超出屏幕范围，停止计数
+//                    }
+//                }
+//                Log.i("lighrecy", "onCreate1:  $fullyVisibleItemCount")
+//            }
         }
     }
 
     private fun initListView() {
-        with(viewBinding.lvTest) {
-            val data = (0..10).map { "测试数据$it" }
-            adapter = CustomAdapter(data)
-            setOnItemClickListener { parent, view, position, id ->
-                val checkedItemPositions: SparseBooleanArray =
-                    getCheckedItemPositions()
-                val isChecked = checkedItemPositions[position]
-                Toast.makeText(
-                    this@MainActivity,
-                    "item $position isChecked=$isChecked",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        }
-    }
+//        with(viewBinding.lvTest) {
+//            val data = (0..10).map { "测试数据$it" }
+//            adapter = CustomAdapter(data)
+//            setOnItemClickListener { parent, view, position, id ->
+//                val checkedItemPositions: SparseBooleanArray =
+//                    getCheckedItemPositions()
+//                val isChecked = checkedItemPositions[position]
+//                Toast.makeText(
+//                    this@MainActivity,
+//                    "item $position isChecked=$isChecked",
+//                    Toast.LENGTH_SHORT
+//                ).show()
+//            }
+//        }
+//    }
 
 }

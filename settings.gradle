@@ -1,5 +1,6 @@
 pluginManagement {
     repositories {
+        mavenLocal()
         google()
         maven {
             setUrl("https://maven.aliyun.com/repository/google")
@@ -23,6 +24,7 @@ pluginManagement {
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
+        mavenLocal()
         maven {
             setUrl("https://maven.aliyun.com/repository/google")
         }
